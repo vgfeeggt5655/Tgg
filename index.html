@@ -3,7 +3,7 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Study Master - Dark Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,11 +33,24 @@
       }
     </script>
     <style type="text/tailwindcss">
-      /* Force dark background on body to prevent white flash */
       body {
-        @apply bg-gray-950 text-gray-100;
+        @apply bg-gray-950 text-gray-100 antialiased;
       }
       
+      /* تخصيص السكرول بار ليناسب الثيم الداكن */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        @apply bg-gray-950;
+      }
+      ::-webkit-scrollbar-thumb {
+        @apply bg-gray-800 rounded-full border-2 border-gray-950;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        @apply bg-primary-600;
+      }
+
       .a4-container {
         @apply w-full max-w-[210mm] mx-auto bg-gray-900 p-[20mm] rounded-lg shadow-2xl border border-gray-800;
         min-height: 297mm;
@@ -46,18 +59,9 @@
       .image-placeholder {
         @apply w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 my-4 border-2 border-dashed border-gray-700 animate-pulse font-sans;
       }
-      .generated-image {
-        @apply w-full max-w-full mx-auto my-6 rounded-lg shadow-lg border border-gray-800;
-      }
-      .image-error {
-        @apply p-4 my-4 bg-red-900/50 text-red-300 rounded-lg border border-red-700 text-center font-sans;
-      }
       
-      /* Smooth transitions for all width changes */
-      .transition-width {
-        transition-property: width;
-        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-duration: 500ms;
+      .transition-all-500 {
+        transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
       }
     </style>
   <script type="importmap">
@@ -76,6 +80,7 @@
 </head>
   <body class="bg-gray-950 text-gray-100">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <!-- استخدام مسار نسبي لضمان التحميل الصحيح على GitHub Pages -->
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

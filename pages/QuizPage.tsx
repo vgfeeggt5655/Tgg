@@ -58,37 +58,48 @@ const QuizPage: React.FC = () => {
     const shareResults = () => {
         const result = quizResults[0];
         if (!result) return;
-        const shareText = `I just scored ${result.score}/${result.totalQuestions} (${result.percentage}%) on a quiz about "${result.pdfName}"! 🎉`;
+        const shareText = `I just scored ${result.score}/${result.totalQuestions} (${result.percentage}%) on "${result.pdfName}" via STUDY AI! 🚀`;
         navigator.clipboard.writeText(shareText).then(() => {
-            alert('Results copied to clipboard!');
+            alert('Score copied to clipboard!');
         });
     };
 
     if (mcqs.length === 0) {
-        return <div className="text-center p-8 text-gray-400">No quiz available. Please return to the homepage to generate one.</div>;
+        return <div className="text-center p-20 text-gray-700 font-black tracking-widest uppercase">Initializing Knowledge Base...</div>;
     }
 
     if (isFinished) {
         const result = quizResults[0];
         return (
-            <div className="max-w-2xl mx-auto bg-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-800">
-                <h1 className="text-3xl font-black text-center mb-4 text-white">Quiz Complete!</h1>
-                <p className="text-center text-xl mb-6 text-gray-300">You scored <span className="text-primary-500 font-bold">{result.score}</span> out of {result.totalQuestions} ({result.percentage}%)</p>
-                <div className="text-center mb-8">
+            <div className="max-w-2xl mx-auto bg-gray-900 p-10 rounded-[3rem] shadow-2xl border border-gray-800 my-10">
+                <h1 className="text-4xl font-black text-center mb-6 text-white uppercase tracking-tighter">Session Terminated</h1>
+                <div className="flex flex-col items-center mb-10">
+                    <div className="w-32 h-32 rounded-full bg-primary-500/10 flex items-center justify-center border-4 border-primary-500 shadow-[0_0_50px_rgba(139,92,246,0.2)] mb-4">
+                        <span className="text-4xl font-black text-white">{result.percentage}%</span>
+                    </div>
+                    <p className="text-xl text-gray-400 font-bold uppercase tracking-widest">{result.score} / {result.totalQuestions} CORRECT</p>
+                </div>
+                
+                <div className="flex justify-center mb-12">
                     <button
                         onClick={shareResults}
-                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl inline-flex items-center transition-transform hover:scale-105"
+                        className="bg-green-600 hover:bg-green-700 text-white font-black py-4 px-10 rounded-2xl inline-flex items-center transition-all hover:scale-105 shadow-xl shadow-green-500/20"
                     >
-                       <ClipboardCopyIcon className="h-5 w-5 mr-2" /> Share Results
+                       <ClipboardCopyIcon className="h-6 w-6 mr-3" /> EXPORT PERFORMANCE
                     </button>
                 </div>
-                <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+
+                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-3 custom-scrollbar">
                     {mcqs.map((mcq, index) => (
-                        <div key={index} className="p-5 rounded-xl bg-gray-800 border border-gray-700">
-                            <p className="font-bold text-gray-100">{index + 1}. {mcq.question}</p>
-                            <div className="mt-3 flex flex-col gap-1">
-                                <p className="text-sm">Your answer: <span className={selectedAnswers[index] === mcq.answer ? 'text-green-400 font-bold' : 'text-red-400 font-bold'}>{selectedAnswers[index] || 'Not answered'}</span></p>
-                                <p className="text-sm">Correct answer: <span className="text-green-400 font-bold">{mcq.answer}</span></p>
+                        <div key={index} className="p-6 rounded-2xl bg-gray-950/50 border border-gray-800">
+                            <p className="font-bold text-gray-200 leading-relaxed mb-4">{index + 1}. {mcq.question}</p>
+                            <div className="grid grid-cols-1 gap-2">
+                                <p className="text-xs uppercase font-black tracking-widest text-gray-600">User Input:</p>
+                                <p className={`text-sm font-bold ${selectedAnswers[index] === mcq.answer ? 'text-green-400' : 'text-red-400'}`}>
+                                    {selectedAnswers[index] || 'NULL'}
+                                </p>
+                                <p className="text-xs uppercase font-black tracking-widest text-gray-600 mt-2">Correct Output:</p>
+                                <p className="text-sm font-bold text-green-400">{mcq.answer}</p>
                             </div>
                         </div>
                     ))}
@@ -101,34 +112,37 @@ const QuizPage: React.FC = () => {
     const progressPercentage = ((currentQuestionIndex + 1) / mcqs.length) * 100;
 
     return (
-        <div className="max-w-2xl mx-auto">
-            <div className="bg-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-800 relative overflow-hidden">
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-black text-white truncate max-w-[80%]">{pdfName}</h2>
-                    <span className="text-gray-500 font-mono text-sm">{currentQuestionIndex + 1} / {mcqs.length}</span>
+        <div className="max-w-2xl mx-auto py-10">
+            <div className="bg-gray-900 p-10 rounded-[3rem] shadow-2xl border border-gray-800 relative overflow-hidden">
+                <div className="flex justify-between items-end mb-8">
+                    <div>
+                        <span className="text-xs font-black text-primary-500 uppercase tracking-[0.3em] mb-2 block">Active Session</span>
+                        <h2 className="text-2xl font-black text-white truncate max-w-[400px]">{pdfName}</h2>
+                    </div>
+                    <span className="text-gray-600 font-black text-lg tracking-tighter">{currentQuestionIndex + 1} <span className="text-gray-800">/</span> {mcqs.length}</span>
                 </div>
                 
-                {/* SMOOTH PROGRESS BAR */}
-                <div className="w-full bg-gray-800 rounded-full h-3 mb-8 overflow-hidden">
+                {/* ULTRA SMOOTH PROGRESS BAR */}
+                <div className="w-full bg-gray-950 rounded-full h-4 mb-12 overflow-hidden border border-gray-800 p-1">
                     <div 
-                        className="bg-primary-500 h-full rounded-full transition-all duration-700 ease-in-out shadow-[0_0_15px_rgba(139,92,246,0.5)]" 
+                        className="bg-primary-500 h-full rounded-full transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1) shadow-[0_0_20px_rgba(139,92,246,0.6)]" 
                         style={{ width: `${progressPercentage}%` }}
                     ></div>
                 </div>
 
-                <div className="min-h-[300px] flex flex-col">
-                    <p className="text-xl font-bold mb-8 text-gray-100 leading-relaxed">{currentMCQ.question}</p>
+                <div className="min-h-[350px] flex flex-col">
+                    <p className="text-2xl font-black mb-10 text-white leading-snug tracking-tight">{currentMCQ.question}</p>
                     <div className="space-y-4 flex-grow">
                         {currentMCQ.options.map((option, index) => (
                             <button
                                 key={index}
                                 onClick={() => handleAnswerSelect(option)}
-                                className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-300 transform
+                                className={`w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 transform font-bold text-lg
                                     ${selectedAnswers[currentQuestionIndex] === option 
-                                        ? 'bg-primary-950/40 border-primary-500 text-white shadow-lg shadow-primary-500/10 scale-[1.02]' 
-                                        : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-600 hover:bg-gray-800/80 hover:scale-[1.01]'}`}
+                                        ? 'bg-primary-950/30 border-primary-500 text-white shadow-2xl shadow-primary-500/10 scale-[1.03]' 
+                                        : 'bg-gray-950 border-gray-800 text-gray-500 hover:border-gray-700 hover:text-gray-300 hover:scale-[1.01]'}`}
                             >
-                                <span className="inline-block w-8 h-8 rounded-lg bg-gray-700 text-center leading-8 mr-3 font-bold text-xs uppercase">
+                                <span className="inline-block w-10 h-10 rounded-xl bg-gray-900 text-center leading-10 mr-5 font-black text-xs uppercase tracking-widest text-primary-500">
                                     {String.fromCharCode(65 + index)}
                                 </span>
                                 {option}
@@ -137,13 +151,13 @@ const QuizPage: React.FC = () => {
                     </div>
                 </div>
                 
-                <div className="mt-10 flex justify-end">
+                <div className="mt-12 flex justify-end">
                     <button
                         onClick={handleNext}
                         disabled={!selectedAnswers[currentQuestionIndex]}
-                        className="bg-primary-600 hover:bg-primary-700 text-white font-black py-3 px-10 rounded-xl disabled:bg-gray-800 disabled:text-gray-600 disabled:cursor-not-allowed shadow-xl shadow-primary-500/20 transition-all hover:-translate-y-1 active:translate-y-0"
+                        className="bg-primary-600 hover:bg-primary-700 text-white font-black py-4 px-14 rounded-2xl disabled:bg-gray-950 disabled:text-gray-800 disabled:cursor-not-allowed shadow-2xl shadow-primary-500/20 transition-all hover:-translate-y-2 active:translate-y-0 uppercase tracking-widest text-sm"
                     >
-                        {currentQuestionIndex < mcqs.length - 1 ? 'NEXT QUESTION' : 'FINISH QUIZ'}
+                        {currentQuestionIndex < mcqs.length - 1 ? 'Next Phase' : 'Terminate & Results'}
                     </button>
                 </div>
             </div>
