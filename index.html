@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Study Master - Dark Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: 'hsl(259, 94%, 66%)',
+                '50': 'hsl(259, 94%, 97%)',
+                '100': 'hsl(259, 94%, 94%)',
+                '200': 'hsl(259, 94%, 88%)',
+                '300': 'hsl(259, 94%, 82%)',
+                '400': 'hsl(259, 94%, 76%)',
+                '500': 'hsl(259, 94%, 66%)',
+                '600': 'hsl(259, 94%, 56%)',
+                '700': 'hsl(259, 94%, 46%)',
+                '800': 'hsl(259, 94%, 36%)',
+                '900': 'hsl(259, 94%, 26%)',
+                '950': 'hsl(259, 94%, 16%)',
+              },
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      /* Force dark background on body to prevent white flash */
+      body {
+        @apply bg-gray-950 text-gray-100;
+      }
+      
+      .a4-container {
+        @apply w-full max-w-[210mm] mx-auto bg-gray-900 p-[20mm] rounded-lg shadow-2xl border border-gray-800;
+        min-height: 297mm;
+      }
+
+      .image-placeholder {
+        @apply w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 my-4 border-2 border-dashed border-gray-700 animate-pulse font-sans;
+      }
+      .generated-image {
+        @apply w-full max-w-full mx-auto my-6 rounded-lg shadow-lg border border-gray-800;
+      }
+      .image-error {
+        @apply p-4 my-4 bg-red-900/50 text-red-300 rounded-lg border border-red-700 text-center font-sans;
+      }
+      
+      /* Smooth transitions for all width changes */
+      .transition-width {
+        transition-property: width;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 500ms;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.3",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.21.0",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/"
+  }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+  <body class="bg-gray-950 text-gray-100">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
